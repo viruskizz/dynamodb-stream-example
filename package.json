@@ -1,0 +1,26 @@
+{
+  "name": "dynamodb-stream-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/handler.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "^2.990.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viruskizz/dynamodb-stream-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viruskizz/dynamodb-stream-example/issues"
+  },
+  "homepage": "https://github.com/viruskizz/dynamodb-stream-example#readme"
+}
