@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
+const https = require('https');
 
 exports.unmarshall = (marshall) => {
 	return AWS.DynamoDB.Converter.unmarshall(marshall);
