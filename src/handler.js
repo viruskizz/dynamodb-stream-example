@@ -3,15 +3,20 @@ const AWS = require("aws-sdk");
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async(event) => {
-	// throw new Error('TEST Throw Error');
-	for(let record of event.Records) {
-		logger(record);
-		await Promise.all([
-			saveLog(record.eventName, record.dynamodb),
-			saveReport(record)
-		]);
+	try {
+		// throw new Error('TEST Throw Error');
+		for(let record of event.Records) {
+			logger(record);
+			await Promise.all([
+				saveLog(record.eventName, record.dynamodb),
+				saveReport(record)
+			])
+		}
+		return `Successfully processed ${event.Records.length} records.`;
+	} catch(e) {
+		await postDiscord(e);
+		throw Error(e);
 	}
-	return `Successfully processed ${event.Records.length} records.`;
 };
 
 function saveLog(event, dynamodb) {
@@ -48,4 +53,20 @@ async function saveReport(record) {
 			value,
 		}
 	}).promise();
+}
+
+async function postDiscord(data) {
+	return httpsPost({
+		hostname: process.env.DISCORD_HOST,
+		path: process.env.DISCORD_PATH,
+		headers: {
+				'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			 content: 'AWS Community Speaker Error testing\n' +
+			 '```\n' +
+			 JSON.stringify(data)+
+			 '```',
+		})
+	});
 }
