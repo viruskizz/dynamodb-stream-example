@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/viruskizz/dynamodb-stream-example">
-    <img src="docs/logo-stream-db-small.jpg" alt="Logo" height="120">
+    <img src="https://github.com/viruskizz/dynamodb-stream-example/raw/main/docs/logo-stream-db-small.jpg" alt="Logo" height="240">
   </a>
 
 <h3 align="center">AWS DynamoDB Stream Example</h3>
