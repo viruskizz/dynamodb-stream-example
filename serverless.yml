@@ -1,13 +1,17 @@
-# Welcome to Serverless!
-# For full config options, check the docs:
-#    docs.serverless.com
-
 service: dynamodb-stream-example
 frameworkVersion: '2'
+useDotenv: true
+
+plugins:
+  - serverless-dotenv-plugin
+
+custom:
+  streamArn: ${env:STREAM_ARN}
+  accountId: ${env:ACCOUNT_ID}
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   lambdaHashingVersion: 20201221
 
 # you can overwrite defaults here
@@ -15,49 +19,42 @@ provider:
 #  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
+  iam:
+    role:
+      statements:  # IAM role statements so that services can be accessed in the AWS account
+        - Effect: Allow
+          Action:
+            - 'logs:*'
+            - 'events:*'
+          Resource:
+            - 'arn:aws:logs:*:*:*'
+        - Effect: Allow
+          Action: # Gives permission to DynamoDB tables in a specific region
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
+            - dynamodb:BatchGetItem
+            - dynamodb:DescribeStream
+            - dynamodb:GetRecords
+            - dynamodb:GetShardIterator
+            - dynamodb:ListShards
+            - dynamodb:ListStreams
+          Resource:
+            - 'arn:aws:dynamodb:*:${self:custom.accountId}:table/*'
+            - 'arn:aws:dynamodb:*:${self:custom.accountId}:table/*/index/*'
 # you can define service wide environment variables here
 #  environment:
 #    variable1: value1
-
-# you can add packaging information here
-#package:
-#  patterns:
-#    - '!exclude-me.js'
-#    - '!exclude-me-dir/**'
-#    - include-me.js
-#    - include-me-dir/**
+package:
+  patterns:
+    - '!test/**'
 
 functions:
   hello:
     handler: src/index.handler
-#    events:
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#    environment:
-#      variable2: value2
-
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+    events:
+      - stream: ${self:custom.streamArn}
