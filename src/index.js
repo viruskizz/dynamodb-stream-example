@@ -1,6 +1,5 @@
-const {generateId, unmarshall, logger} = require("./utility");
+const {generateId, unmarshall, logger, httpsPost} = require("./utility");
 const AWS = require("aws-sdk");
-const documentClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async(event) => {
 	try {
@@ -14,7 +13,7 @@ exports.handler = async(event) => {
 		}
 		return `Successfully processed ${event.Records.length} records.`;
 	} catch(e) {
-		await postDiscord(e);
+		// await postDiscord(e);
 		throw Error(e);
 	}
 };

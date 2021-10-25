@@ -66,9 +66,20 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-This project will show you about basic AWS DynamoDB Stream. You will know how to use them and benefit of Stream.
+
+This project is a part of Data event-driven with DynamoDB Stream in AWS Community Thailand Meetup 2021 at 26 October 2021.
+You can learn more from my content slide [OPEN SLIDE][content-slide-url]
+
+What's thing you will learn:
+* How to write the stream function on AWS Lambda
+* Automate deployment with Serverless Framework
+* Benefit of Stream
+* Basic use case for adaption
+* Basic test suite for stream function
+
 If you don't have any AWS knowledge background, you should learn it first from Acknowledge section on footer of this page.
 
 
@@ -124,8 +135,6 @@ This project example is about customer payment.The system have to log payment da
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- CONTACT -->
@@ -147,8 +156,6 @@ the acknowledgement is related with this project.
 * [Serverless Framework](https://www.serverless.com/)
 * [Jest Javascript Test Framework](https://jestjs.io/)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -166,3 +173,4 @@ the acknowledgement is related with this project.
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/thitiwut-somsa-7b3210127/
 [product-screenshot]: docs/project-architect.png
+[content-slide-url]: https://docs.google.com/presentation/d/e/2PACX-1vT34PLER8Lp0J_B7Qr67idIoHkle6TocqgsZDPPkV4LsyikLxbale8DBLxzjHb9kr3INW9kOvi0GPSk/pub?start=false&loop=false

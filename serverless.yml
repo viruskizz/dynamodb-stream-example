@@ -42,15 +42,70 @@ provider:
             - dynamodb:ListShards
             - dynamodb:ListStreams
           Resource:
-            - 'arn:aws:dynamodb:*:${self:custom.accountId}:table/*'
-            - 'arn:aws:dynamodb:*:${self:custom.accountId}:table/*/index/*'
+            - 'arn:aws:dynamodb:*: ${env:ACCOUNT_ID}:table/*'
+            - 'arn:aws:dynamodb:*:${env:ACCOUNT_ID}:table/*/index/*'
 
 package:
   patterns:
     - '!test/**'
 
 functions:
-  hello:
+  stream:
     handler: src/index.handler
     events:
-      - stream: ${self:custom.streamArn}
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [ paymentTable, StreamArn ]
+
+resources: # CloudFormation template syntax
+  Resources:
+    paymentTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:PAYMENT_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    logTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:LOGGING_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+    reportTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:REPORT_TABLE}
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+  # The "Outputs" that your AWS CloudFormation Stack should produce.  This allows references between services.
+  Outputs:
+    PaymentStreamArn:
+      Description: The Stream ARN for the Payment's Table
+      Value:
+        'Fn::GetAtt': [ paymentTable, StreamArn ]
+      Export:
+        Name: ${self:service}:${opt:stage}:PaymmentStreamArn # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html for documentation on use.

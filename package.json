@@ -9,18 +9,18 @@
   "dependencies": {},
   "devDependencies": {
     "aws-sdk": "^2.1013.0",
-    "jest": "^27.3.1",
     "serverless-dotenv-plugin": "^3.10.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "env": "export $(xargs < .env)",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/viruskizz/dynamodb-stream-example.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Thitiwut Sommsa",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/viruskizz/dynamodb-stream-example/issues"
   },
