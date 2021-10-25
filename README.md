@@ -153,16 +153,16 @@ the acknowledgement is related with this project.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/viruskizz/dynamodb-stream-example.svg?style=for-the-badge
+[contributors-url]: https://github.com/viruskizz/dynamodb-stream-example/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/viruskizz/dynamodb-stream-example.svg?style=for-the-badge
+[forks-url]: https://github.com/viruskizz/dynamodb-stream-example/network/members
+[stars-shield]: https://img.shields.io/github/stars/viruskizz/dynamodb-stream-example.svg?style=for-the-badge
+[stars-url]: https://github.com/viruskizz/dynamodb-stream-example/stargazers
+[issues-shield]: https://img.shields.io/github/issues/viruskizz/dynamodb-stream-example.svg?style=for-the-badge
+[issues-url]: https://github.com/viruskizz/dynamodb-stream-example/issues
+[license-shield]: https://img.shields.io/github/license/viruskizz/dynamodb-stream-example.svg?style=for-the-badge
+[license-url]: https://github.com/viruskizz/dynamodb-stream-example/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+[linkedin-url]: https://www.linkedin.com/in/thitiwut-somsa-7b3210127/
+[product-screenshot]: docs/project-architect.png
