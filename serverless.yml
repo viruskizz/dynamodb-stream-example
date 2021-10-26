@@ -5,10 +5,6 @@ useDotenv: true
 plugins:
   - serverless-dotenv-plugin
 
-custom:
-  streamArn: ${env:STREAM_ARN}
-  accountId: ${env:ACCOUNT_ID}
-
 provider:
   name: aws
   #  stage: dev
@@ -17,7 +13,6 @@ provider:
   lambdaHashingVersion: 20201221
   memorySize: 2048 # Overwrite the default memory size. Default is 1024
   timeout: 60 # The default is 6 seconds. Note: API Gateway current maximum is 30 seconds
-
   iam:
     role:
       statements:  # IAM role statements so that services can be accessed in the AWS account
@@ -42,7 +37,7 @@ provider:
             - dynamodb:ListShards
             - dynamodb:ListStreams
           Resource:
-            - 'arn:aws:dynamodb:*: ${env:ACCOUNT_ID}:table/*'
+            - 'arn:aws:dynamodb:*:${env:ACCOUNT_ID}:table/*'
             - 'arn:aws:dynamodb:*:${env:ACCOUNT_ID}:table/*/index/*'
 
 package:
@@ -95,9 +90,13 @@ resources: # CloudFormation template syntax
         AttributeDefinitions:
           - AttributeName: key
             AttributeType: S
+          - AttributeName: type
+            AttributeType: S
         KeySchema:
           - AttributeName: key
             KeyType: HASH
+          - AttributeName: type
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 2
           WriteCapacityUnits: 2

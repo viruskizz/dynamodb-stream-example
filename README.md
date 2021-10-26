@@ -78,7 +78,7 @@ What's thing you will learn:
 * Automate deployment with Serverless Framework
 * Benefit of Stream
 * Basic use case for adaption
-* Basic test suite for stream function
+* Basic test for stream function in Lambda Console
 
 If you don't have any AWS knowledge background, you should learn it first from Acknowledge section on footer of this page.
 
@@ -111,24 +111,27 @@ This project example is about customer payment.The system have to log payment da
 3. Setup Project environment by copy `example.env` to `.env`
    ```dotenv
     ACCOUNT_ID=<account_id>
-    STREAM_ARN=<stream_amazon_resource_name>
     REGION=<region_code>
     PAYMENT_TABLE=<payment_table_name>
     REPORT_TABLE=<report_table_namme>
     LOGGING_TABLE=<log_table_name>
+    DISCORD_HOOK_PATH=<hook_id>/<hook_token>
     ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-1. test this project
-    ```sh
-    npm run test
-    ```
-2. deploy the AWS Resource
+1. deploy the AWS Resource
     ```sh
     serverless deploy
     ```
+2. Testing payload for execute test in Lambda Console
+   ```yml
+   directory: __tests__/payloads/
+   success_payload: test-report.json
+   failure_payload: fail-report,json
+   template_payload: test-stream.json
+   ```
 
 <!-- LICENSE -->
 ## License

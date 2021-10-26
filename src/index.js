@@ -1,11 +1,12 @@
 const {generateId, unmarshall, logger, httpsPost} = require("./utility");
 const AWS = require("aws-sdk");
+const documentClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async(event) => {
 	try {
-		// throw new Error('TEST Throw Error');
 		for(let record of event.Records) {
 			logger(record);
+			verifyBody(record.dynamodb);
 			await Promise.all([
 				saveLog(record.eventName, record.dynamodb),
 				saveReport(record)
@@ -13,10 +14,17 @@ exports.handler = async(event) => {
 		}
 		return `Successfully processed ${event.Records.length} records.`;
 	} catch(e) {
-		// await postDiscord(e);
+		await postDiscord(e);
 		throw Error(e);
 	}
 };
+
+function verifyBody(record) {
+	const data = unmarshall(record.dynamodb.NewImage);
+	if (data.total < 0) {
+		throw new Error('Total value cannot be lowwer than 0');
+	}
+}
 
 function saveLog(event, dynamodb) {
 	return documentClient.put({
@@ -40,9 +48,9 @@ async function saveReport(record) {
 	}).promise();
 	let value = report.Item && report.Item.value ? report.Item.value : 0;
 	if (eventName === 'REMOVE') {
-		value -= unmarshall(record.dynamodb.OldImage).total;
+		value -= unmarshall(record.dynamodb.OldImage).total || 0;
 	} else {
-		value += unmarshall(record.dynamodb.NewImage).total;
+		value += unmarshall(record.dynamodb.NewImage).total || 0;
 	}
 	return documentClient.put({
 		TableName: process.env.REPORT_TABLE,
@@ -56,8 +64,8 @@ async function saveReport(record) {
 
 async function postDiscord(data) {
 	return httpsPost({
-		hostname: process.env.DISCORD_HOST,
-		path: process.env.DISCORD_PATH,
+		hostname: 'discord.com',
+		path: 'api/webhooks/' + process.env.DISCORD_HOOK_PATH,
 		headers: {
 				'Content-Type': 'application/json',
 		},
@@ -69,3 +77,4 @@ async function postDiscord(data) {
 		})
 	});
 }
+

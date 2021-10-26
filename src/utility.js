@@ -8,7 +8,7 @@ exports.unmarshall = (marshall) => {
 
 exports.logger = (data) => {
 	console.log('Stream Data: ', JSON.stringify(data, null, 2));
-}
+};
 
 exports.generateId = () => {
 	const id = crypto.randomBytes(16).toString("hex");
